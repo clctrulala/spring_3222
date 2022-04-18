@@ -1,10 +1,9 @@
 package web.config;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
@@ -12,6 +11,7 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import web.model.Car;
 import web.service.CarService;
+import web.service.CarServiceImpl;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -24,9 +24,6 @@ public class AppConfig {
 
     @Autowired
     private Environment env;
-
-//    @Autowired
-//    private CarService carService;
 
     @Bean
     public DataSource getDataSource() {
@@ -58,11 +55,13 @@ public class AppConfig {
         transactionManager.setSessionFactory(getSessionFactory().getObject());
 
         // заполнение базы
-//        carService.add( new Car("color_a", "Brand_A", 111) );
-//        carService.add( new Car("color_b", "Brand_B", 222) );
-//        carService.add( new Car("color_c", "Brand_C", 333) );
-//        carService.add( new Car("color_d", "Brand_D", 444) );
-//        carService.add( new Car("color_e", "Brand_E", 555) );
+        Session session = transactionManager.getSessionFactory().openSession();
+        Transaction transaction = session.getTransaction();
+        String sql = "insert into Car(color, brand, number) values ('color_a', 'Brand_A', 111),('color_b', 'Brand_B', 222),('color_c', 'Brand_C', 333),('color_d', 'Brand_D', 444),('color_e', 'Brand_E', 555);";
+        transaction.begin();
+        session.createSQLQuery(sql).executeUpdate();
+        transaction.commit();
+        session.close();
 
         return transactionManager;
     }

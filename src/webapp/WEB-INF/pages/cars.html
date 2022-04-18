@@ -8,7 +8,7 @@
         <div>
             <table align="center" border=1px style="border-color:red; background-color:yellow;">
                 <th>Color</th> <th>Brand</th> <th>Serial</th>
-                <tr th:each="car : ${cars}">
+                <tr style="background-color:#eeeeee;" th:each="car : ${cars}">
                     <td th:text="${car.getColor()}"></td>
                     <td th:text="${car.getBrand()}"></td>
                     <td th:text="${car.getNumber()}"></td>
