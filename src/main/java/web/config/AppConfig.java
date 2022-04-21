@@ -9,9 +9,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import web.model.Car;
-import web.service.CarService;
-import web.service.CarServiceImpl;
+import web.model.User;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -45,7 +43,7 @@ public class AppConfig {
         props.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
 
         factoryBean.setHibernateProperties(props);
-        factoryBean.setAnnotatedClasses(Car.class);
+        factoryBean.setAnnotatedClasses(User.class);
         return factoryBean;
     }
 
@@ -57,7 +55,7 @@ public class AppConfig {
         // заполнение базы
         Session session = transactionManager.getSessionFactory().openSession();
         Transaction transaction = session.getTransaction();
-        String sql = "insert into Car(color, brand, number) values ('color_a', 'Brand_A', 111),('color_b', 'Brand_B', 222),('color_c', 'Brand_C', 333),('color_d', 'Brand_D', 444),('color_e', 'Brand_E', 555);";
+        String sql = "insert into User(name, birthdate, gender, phone) values ('Jhon Connor', str_to_date('1984-01-01', '%Y-%m-%d'), 0, '+75551122334'),('Sara Connor', str_to_date('1967-06-05', '%Y-%m-%d'), 1, '+70005566778');";
         transaction.begin();
         session.createSQLQuery(sql).executeUpdate();
         transaction.commit();
