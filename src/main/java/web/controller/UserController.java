@@ -6,12 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import web.model.User;
 import web.service.UserService;
 import web.util.Gender;
 
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -31,22 +29,22 @@ public class UserController {
 		return "index";
 	}
 
-	@GetMapping("add")
-	public String addUser( String name, @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date birthdate, String gender, String phone, ModelMap model ) {
+	@GetMapping( value = "add", params = {"name!=", "birthdate!=", "gender!=", "phone!="} )
+	public String addUser( String name,  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date birthdate, String gender, String phone, ModelMap model ) {
 		Optional<Gender> genderType = Arrays.stream( Gender.values() ).filter(v -> v.name().contains(gender.toUpperCase()) ).findFirst();
-		boolean flag =  genderType.isPresent() && userService.addUser( new User(name, birthdate, genderType.get(), phone) );
+		boolean flag =  genderType.isPresent() && phone.matches("^[+]7[0-9]{10}") && userService.addUser( new User(name, birthdate, genderType.get(), phone) );
 
 		setResponse(flag, model, "New user added", "Error: append failed");
 		return getUsers(model);
 	}
 
-	@GetMapping("update")
+	@GetMapping( value = "update", params = {"id!=", "name!=", "birthdate!=", "gender!=", "phone!="} )
 	public String updateUser( long id, String name, @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date birthdate, String gender, String phone, ModelMap model ) {
 		Optional<Gender> genderType = Arrays.stream( Gender.values() ).filter(v -> v.name().contains(gender.toUpperCase()) ).findFirst();
 
 		setResponse( false, model, "User updated", "User not updated" );
 
-		if( genderType.isPresent() ) {
+		if( genderType.isPresent() && phone.matches("^[+]7[0-9]{10}") ) {
 			boolean flag = userService.updateUser( new User(id, name, birthdate, genderType.get(), phone) );
 
 			setResponse( flag, model, "User updated", "User not updated" );
@@ -61,9 +59,9 @@ public class UserController {
 		return getUsers(model);
 	}
 
-	private void setResponse( boolean flag, ModelMap model, String acomplished, String incomlished){
+	private void setResponse( boolean flag, ModelMap model, String accomplished, String incomlished){
 		final String attribute = "response";
-		String msg = flag ? acomplished : incomlished;
+		String msg = flag ? accomplished : incomlished;
 
 		model.addAttribute(attribute, msg);
 	}
