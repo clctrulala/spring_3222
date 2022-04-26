@@ -10,6 +10,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
+import web.util.ControllerResponseMessage;
+import web.util.InputDataFilter;
 
 @Configuration
 @EnableWebMvc
@@ -45,4 +47,12 @@ public class WebConfig implements WebMvcConfigurer {
         resolver.setTemplateEngine(templateEngine());
         registry.viewResolver(resolver);
     }
+
+    @Bean
+    public ControllerResponseMessage getResponseMessage() {
+        return new ControllerResponseMessage();
+    }
+
+    @Bean
+    public InputDataFilter getInputDataFilter() { return new InputDataFilter(); }
 }

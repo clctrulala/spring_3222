@@ -11,7 +11,7 @@ import java.util.List;
 public class UserDaoImpl implements UserDao {
 
     @PersistenceContext
-    EntityManager em;
+    private EntityManager em;
 
     @Override
     public boolean addUser(User user) {
@@ -26,7 +26,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean updateUser(User user) {
-        if ( null!=em.find( User.class, user.getId() ) ) {
+        if (null!=em.find(User.class, user.getId())) {
             em.merge(user);
             return true;
         }
@@ -35,9 +35,9 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean deleteUser(long id) {
-        User user = em.find( User.class, id );
+        User user = em.find(User.class, id);
 
-        if ( null!=user ) {
+        if (null!=user) {
             em.remove(user);
             return true;
         }

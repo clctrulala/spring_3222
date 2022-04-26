@@ -12,9 +12,8 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import web.model.User;
+import web.util.TestDatabaseTable;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.sql.DataSource;
 import java.util.Properties;
 
@@ -42,11 +41,11 @@ public class AppConfig {
         LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
         factoryBean.setDataSource(getDataSource());
 
-        Properties props=new Properties();
+        Properties props = new Properties();
         props.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
         props.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
-
         factoryBean.setJpaProperties(props);
+
         factoryBean.setPackagesToScan(new String[] { User.class.getPackage().getName() });
         factoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         return factoryBean;
@@ -57,14 +56,8 @@ public class AppConfig {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(getEntityManagerFactory().getObject());
 
-        // заполнение базы
-        EntityManager entityManager = transactionManager.getEntityManagerFactory().createEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-        String sql = "insert into User(name, birthdate, gender, phone) values ('Jhon Connor', str_to_date('1984-01-01', '%Y-%m-%d'), 0, '+75551122334'),('Sara Connor', str_to_date('1967-06-05', '%Y-%m-%d'), 1, '+70005566778');";
-        transaction.begin();
-        entityManager.createNativeQuery(sql).executeUpdate();
-        transaction.commit();
-        entityManager.close();
+        // заполнение базы тестовыми данными
+        TestDatabaseTable.fillDataset(transactionManager);
 
         return transactionManager;
     }
