@@ -30,10 +30,4 @@ public class InputDataFilter {
     public boolean validate() {
         return gender.isPresent() && phone.isPresent();
     }
-
-    public InputDataFilter clear() {
-        phone = Optional.empty();
-        gender = Optional.empty();
-        return this;
-    }
 }
