@@ -16,27 +16,35 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
 
-    @Transactional
+//    @Transactional
     @Override
     public boolean addUser(User user) {
-        return userDao.addUser(user);
+        return null != userDao.save(user);
     }
 
-    @Transactional(readOnly = true)
+//    @Transactional(readOnly = true)
     @Override
     public List<User> getUsers() {
-        return userDao.getUsers();
+        return userDao.findAll();
     }
 
-    @Transactional
+//    @Transactional
     @Override
     public boolean updateUser(User user) {
-        return userDao.updateUser(user);
+        if ( userDao.existsById(user.getId()) ) {
+            userDao.save(user);
+            return true;
+        }
+        return false;
     }
 
-    @Transactional
+//    @Transactional
     @Override
     public boolean deleteUser(long id) {
-        return userDao.deleteUser(id);
+//        if ( userDao.existsById(id) ) {
+//            userDao.deleteById(id);
+//            return true;
+//        }
+        return 0 < userDao.deleteUserById(id);
     }
 }

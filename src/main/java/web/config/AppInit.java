@@ -1,21 +1,19 @@
 package web.config;
 
-import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
-public class AppInit extends AbstractAnnotationConfigDispatcherServletInitializer {
+@SpringBootApplication
+public class AppInit extends SpringBootServletInitializer {
 
     @Override
-    protected Class<?>[] getRootConfigClasses() {
-        return new Class<?>[]{ AppConfig.class };
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(AppInit.class);
     }
 
-    @Override
-    protected Class<?>[] getServletConfigClasses() {
-        return new Class<?>[]{ WebConfig.class };
-    }
-
-    @Override
-    protected String[] getServletMappings() {
-        return new String[]{"/"};
+    public static void main(String[] args) {
+        SpringApplication.run(AppInit.class, args);
     }
 }
