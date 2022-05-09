@@ -6,13 +6,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class AppInit extends SpringBootServletInitializer {
-
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(AppInit.class);
-    }
-
+public class AppInit {
     public static void main(String[] args) {
         SpringApplication.run(AppInit.class, args);
     }
