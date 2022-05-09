@@ -41,10 +41,10 @@ public class UserServiceImpl implements UserService {
 //    @Transactional
     @Override
     public boolean deleteUser(long id) {
-//        if ( userDao.existsById(id) ) {
-//            userDao.deleteById(id);
-//            return true;
-//        }
-        return 0 < userDao.deleteUserById(id);
+        if ( userDao.existsById(id) ) {
+            userDao.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }

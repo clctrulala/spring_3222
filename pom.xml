@@ -55,15 +55,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-<!--            <plugin>-->
-<!--                <groupId>org.opoo.maven</groupId>-->
-<!--                <artifactId>tomcat9-maven-plugin</artifactId>-->
-<!--                <version>3.0.1</version>-->
-<!--                <configuration>-->
-<!--                    <port>8080</port>-->
-<!--                    <path>/</path>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
         </plugins>
 
         <finalName>spring_boot_mvc</finalName>

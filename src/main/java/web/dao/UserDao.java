@@ -13,5 +13,5 @@ public interface UserDao extends CrudRepository<User, Long> {
     @Override
     List<User> findAll();
 
-    Integer deleteUserById(long id);
+    Long deleteById(long Id);
 }
