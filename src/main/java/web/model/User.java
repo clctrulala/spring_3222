@@ -21,7 +21,7 @@ public class User {
     private Date birthdate;
 
     @Column
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private Gender gender;
 
     @Column

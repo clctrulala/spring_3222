@@ -6,8 +6,8 @@ import java.util.Date;
 import java.util.List;
 
 public interface UserService {
-    boolean addUser(User user);
+    void addUser(User user);
     List<User> getUsers();
-    boolean updateUser(User user);
-    boolean deleteUser(long id);
+    void updateUser(User user);
+    void deleteUser(long id);
 }

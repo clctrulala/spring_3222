@@ -12,13 +12,13 @@
             <th></th> <th>Name</th> <th>Birthdate</th> <th>Gender</th> <th>Phone</th> <th></th>
         </tr>
         <tr>
-            <form id="noname" action="http://localhost:8080/add">
+            <form id="noname" action="http://localhost:8080/add" method="post">
                 <td><input type="submit" value="APPEND USER"/></td>
                 <td><input type="text" name="name" placeholder="Enter full name"/></td>
                 <td><input type="date" name="birthdate"/></td>
                 <td>
-                    <label>M<input type="radio" value="male" name="gender" checked/></label>
-                    <label>F<input type="radio" value="female" name="gender"/></label>
+                    <label>M<input type="radio" value="MALE" name="gender" checked/></label>
+                    <label>F<input type="radio" value="FEMALE" name="gender"/></label>
                 </td>
                 <td><input type="tel" name="phone" pattern="[+]{1}[7]{1}[0-9]{10}" placeholder="+79603366598"/></td>
                 <td></td>
@@ -26,7 +26,7 @@
         </tr>
         <tr><td colspan=6 align="center"><label>Person list</label></td></tr>
         <tr th:each="user : ${users}">
-            <form id="user" action="http://localhost:8080/update" th:attrappend="id=${user.id}">
+            <form id="user" action="http://localhost:8080/update" method="post" th:attrappend="id=${user.id}">
                 <td>
                     <input type="number" name="id" hidden th:attr="value=${user.id}"/>
                     <input type="submit" value="APPLY CHANGES"/>
@@ -35,12 +35,12 @@
                 <td><input type="date" name="birthdate" th:attr="value=${#dates.format(user.birthdate, 'yyyy-MM-dd')}"/></td>
                 <td th:switch="${user.gender.toString()}">
                     <div th:case="'MALE'">
-                        <label for="rm">M<input id="rm" type="radio" value="male" name="gender" checked/></label>
-                        <label for="rf">F<input id="rf" type="radio" value="female" name="gender"/></label>
+                        <label for="rm">M<input id="rm" type="radio" value="MALE" name="gender" checked/></label>
+                        <label for="rf">F<input id="rf" type="radio" value="FEMALE" name="gender"/></label>
                     </div>
                     <div th:case="'FEMALE'">
-                        <label for="rm">M<input id="rm" type="radio" value="male" name="gender"/></label>
-                        <label for="rf">F<input id="rf" type="radio" value="female" name="gender" checked/></label>
+                        <label for="rm">M<input id="rm" type="radio" value="MALE" name="gender"/></label>
+                        <label for="rf">F<input id="rf" type="radio" value="FEMALE" name="gender" checked/></label>
                     </div>
                 </td>
                 <td><input type="tel" value="+79603366598" name="phone" pattern="[+]{1}[7]{1}[0-9]{10}" th:attr="value=${user.phone}"/></td>
